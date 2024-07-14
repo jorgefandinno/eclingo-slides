@@ -192,7 +192,24 @@
     \end{theorem}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\begin{frame}{Implementation}
+    \begin{myitemize}
+        \item Our implementation is built on top of version~5.7 of the ASP solver~\texttt{clingo} using Python and ASP.
+        \begin{itemize}
+            \item We use reification and metaprogramming to describe the generate and test programs.
+            \item We can change the generate and test programs by changing an ASP program.
+        \end{itemize}
+    \end{myitemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Experimental Results}
+    \begin{myitemize}
+        \item We compare our new solver with We also compare our implementation with~\texttt{EP-ASP},
+        the previous version of~\texttt{eclingo},
+        \texttt{selp}, and~\texttt{elp2qasp}.
+    \end{myitemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{\backcoverpage}
