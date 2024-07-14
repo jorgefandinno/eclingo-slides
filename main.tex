@@ -152,6 +152,47 @@
     \hi{$\kp{b}$} is used to distinguish that~$\K b$ is a consequence dervided from choices of epistemic atoms while~$kb$ only states that~$\K b$ has been chosen to be true.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Propagate Epistemic Consequences}
+    \begin{myitemize}
+        \item[] For every normal rule of the form
+        \begin{align}
+            a_1 &\leftarrow 
+            a_2,\!\dotsc\!,a_k,
+            \neg a_{k+1},\!\dotsc\!,\neg a_m,
+            {L_{m+1}},\!\dotsc\!,{L_n}
+        \end{align}
+        with each~$L_i$ a~$\K$-atom, we add a rule of the form
+        \begin{gather}
+            \begin{aligned}
+                \kp{a_1} &\span\span\leftarrow 
+                \kp{a_2},\dotsc,\kp{a_k},
+                \kpnott{a_{k+1}},\dotsc,\kpnott{a_m},
+                \kk{L_{m+1}},\dotsc,\kk{L_n}
+            \end{aligned}
+        \end{gather}
+        \vspace*{-15pt}
+        \begin{itemize}
+            \item \kp{a} means that we have concluded that~$a$ is true in all stable models corresponding to the considered candidate worldview.
+            \item \kpnott{a} means that we have concluded that~$a$ is false in all stable models corresponding to the considered candidate worldview.
+            \item atoms of the form~\kpnott{a} are derived through a kind of completion of the program.
+        \end{itemize}
+    \end{myitemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[c]{Propagate Epistemic Consequences}
+    \begin{theorem}
+        This method produces a valid generator program, and, thus, Algorithm~\ref{alg:guess-and-check} correctly computes the worldviews.
+        %
+        Furthermore,
+        \begin{itemize}
+            \item It produces at most as many candidates as the basic generator program.
+            \item For some program class, it produces exponentially fewer candidates.
+            \item It only introduces a linear overhead.
+        \end{itemize}
+    \end{theorem}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{\backcoverpage}
