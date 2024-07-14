@@ -1,0 +1,60 @@
+% !TEX program = pdflatex
+% !TEX spellcheck = en_US
+\documentclass[aspectratio=169,svgnames,xcolor=table,t]{beamer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily,escapechar=\%,escapeinside={\#(}{\#)}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amstext}
+\usepackage{calc}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\tikzset{place/.style={draw}}
+\tikzset{>=stealth, auto, node distance=2.5cm, every loop/.style={->, min distance=10mm, in=0, out=60, looseness=10}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{uno_style.tex}
+\input{macro.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use enumitem and restore beamer defaults
+% \usepackage{enumitem}
+% \setitemize{label=\usebeamerfont*{itemize item}%
+%   \usebeamercolor[fg]{itemize item}
+%   \usebeamertemplate{itemize item}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author[J. Fandinno \& Y. Lierler]{{\usebeamercolor[fg]{alerted text}Jorge Fandinno} and Yuliya Lierler}
+
+\date{AAAI 2023}
+
+\institute[UNO]{
+    Department of Computer Science \\
+    University of Nebraska Omaha
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Metadata
+\title{\texttt{eclingo} 2.0}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Answer set programming}
+\begin{myitemize}
+    \item \hi{\texttt{eclingo}} is a solver for epistemic logic programs.
+    \begin{align*}
+        \mathit{felon}   &\leftarrow \K\, \mathit{break\_rule}
+        \\
+        \mathit{suspect} &\leftarrow \neg \K\, \mathit{break\_rule}, \neg \K \neg \mathit{break\_rule}
+    \end{align*}
+    This encodes that a person a~$\mathit{felon}$ if we can determine that she broke a rule, and she is a~$\mathit{suspect}$ if it cannot be determined that she has broken nor that she has not done.
+
+    \item Deciding if an epistemic logic program has an answer (called \hi{worldview}) is~$\Sigma^P_3$-complete and~$\Sigma^P_2$-complete for the case of dijuntive\nobreak-free programs.
+    
+    \item We developed a new version of \texttt{eclingo} that is \speedup{3.3x} faster and solves 87\% more instances.
+\end{myitemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{\backcoverpage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

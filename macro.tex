@@ -1,0 +1,79 @@
+\newenvironment{myitemize}{%
+\setlength{\leftmargini}{0pt}
+\begin{itemize}%
+\setlength{\itemsep}{5pt}
+}{%
+\end{itemize}%
+}
+
+\newenvironment{mmyitemize}{%
+\begin{itemize}%
+\setlength{\itemsep}{5pt}
+}{%
+\end{itemize}%
+}
+
+\newcommand{\hi}[1]{\alert{#1}}
+
+\let\oldtitlepage\titlepage
+
+\renewcommand{\titlepage}{%
+\let\oldinserttitle\inserttitle%
+\renewcommand\inserttitle{\oldinserttitle\titlecovernote}%
+\oldtitlepage%
+\let\inserttitle\oldinserttitle%
+}
+
+
+\newcommand\backcoverpage{%
+\let\oldinsertinstitute\insertinstitute%
+\renewcommand\insertinstitute{\alert{\Large\bf Thanks for your attention!}}%
+\oldtitlepage%
+\let\insertinstitute\oldinsertinstitute%
+}
+
+
+\let\titlepage\oldtitlepage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \newtheorem{theorem}{Theorem}
+% \newtheorem*{mtheorem}{Main Theorem}
+% \newtheorem{lemma}{Lemma}
+% \newtheorem{proposition}{Proposition}
+% \newtheorem{definition}{Definition}
+% \newtheorem{corollary}{Corollary}
+% \newtheorem{example}{Example}
+% \newtheorem{observation}{Observation}
+
+\newcommand{\K}{\ensuremath{\mathbf{K}}}
+\newcommand{\M}{\ensuremath{\mathbf{M}}}
+\newcommand{\nott}[1]{\ensuremath{\mathit{n#1}}}
+\newcommand{\notnot}[1]{\ensuremath{\mathit{nn#1}}}
+\newcommand{\kk}[1]{\ensuremath{\mathit{k#1}}}
+\newcommand{\kknott}[1]{\ensuremath{\mathit{kn#1}}}
+\newcommand{\kp}[1]{\ensuremath{\mathit{pk#1}}}
+\newcommand{\kpnott}[1]{\ensuremath{\mathit{pkn#1}}}
+\newcommand{\kpn}[1]{\ensuremath{\mathit{nk#1}}}
+\newcommand{\NF}[1]{\ensuremath{\mathit{NF}(#1)}}
+\newcommand{\AT}{\ensuremath{\mathit{At}}}
+\newcommand{\At}[1]{\ensuremath{\mathit{At}(#1)}}
+\newcommand{\Atk}[1]{\ensuremath{\mathit{At^k}(#1)}}
+\newcommand{\restr}[2]{{#1}_{\!|\!#2}}
+\newcommand{\SM}[1]{\text{\rm SM}[#1]}
+\newcommand{\SMC}[1]{\text{\rm CC}[#1]}
+\newcommand{\SMCA}[1]{\text{\rm ACC}[#1]}
+\newcommand{\Lit}{\ensuremath{\mathit{Lit}}}
+
+\newcommand\wv{\mathbb{W}}
+
+\newcommand{\EPASP}{\texttt{EP-ASP}}
+\newcommand{\eclingo}{\texttt{eclingo}}
+
+
+\newcounter{programcounter}
+\newcommand{\newprogramph}{\refstepcounter{programcounter}}
+\newcommand{\newprogram}{\refstepcounter{programcounter}\ensuremath{\Pi_{\theprogramcounter}}}
+\newcommand{\program}[1]{\ensuremath{\Pi_{#1}}}
+\newcommand{\speedup}[1]{\raisebox{0.1em}{\scriptsize$\sim$}#1}

@@ -1,0 +1,67 @@
+% Font Settings
+
+\usepackage{anyfontsize}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[lighttt]{lmodern}
+\usepackage[sfdefault,scaled=0.85,lf]{FiraSans}
+\usepackage[scaled=0.85]{FiraMono}
+\usepackage[scaled=0.85]{newtxsf}
+\renewcommand\rmdefault{\sfdefault}
+\usepackage[english]{babel}
+\usepackage[autostyle,english=american]{csquotes}
+\usepackage[protrusion,expansion,kerning,spacing,final]{microtype}
+\microtypecontext{spacing=nonfrench}
+
+% Color Definitions
+
+\definecolor{SB}{RGB}{89,107,131}
+\definecolor{SR}{RGB}{132,67,58}
+\definecolor{SG}{RGB}{62,97,27}
+\definecolor{CH}{RGB}{85,85,85}
+
+% Beamer Setup
+
+\usetheme{metropolis}
+\metroset{subsectionpage=progressbar}
+\makeatletter
+\setbeamertemplate{section page}{
+  \centering
+  \begin{minipage}{0.8\linewidth}
+    \raggedright
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsectionhead\\[-1ex]
+    \usebeamertemplate*{progress bar in section page}
+    \par
+    \ifx\insertsubsectionhead\@empty\else%
+      \usebeamercolor[fg]{subsection title}%
+      \usebeamerfont{subsection title}%
+      \insertsubsectionhead
+    \fi
+  \end{minipage}
+  \par
+  \vspace{\baselineskip}
+}
+\newcommand{\disablesectionpage}{\metropolis@disablesectionpage}
+\newcommand{\enablesectionpage}{\metropolis@enablesectionpage}
+\makeatother
+
+
+\setbeamercolor{frametitle}{bg=black}
+\setbeamercolor{progress bar}{fg=SR,bg=SR}
+\setbeamercolor{title separator}{fg=SR,bg=SR}
+\setbeamercolor{structure}{fg=gray}
+\setbeamerfont{structure}{series=\bfseries}
+
+
+% Theorem style
+
+\makeatletter
+\renewcommand<>\beamer@begintheorem[1][]{%
+    \ifblank{#1}
+    {\def\inserttheoremaddition{}}
+    {\def\inserttheoremaddition{#1}}
+    \usebeamertemplate{theorem begin}#2\vspace{1pt}}
+  \def\@endtheorem{\usebeamertemplate{theorem end}\vspace{1pt}}
+\makeatother
