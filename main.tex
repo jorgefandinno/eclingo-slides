@@ -8,6 +8,7 @@
 \usepackage{amsmath,amssymb,amstext}
 \usepackage{calc}
 \usepackage{tikz}
+\usepackage{algorithm, algorithmic}
 \usetikzlibrary{positioning}
 \tikzset{place/.style={draw}}
 \tikzset{>=stealth, auto, node distance=2.5cm, every loop/.style={->, min distance=10mm, in=0, out=60, looseness=10}}
@@ -21,7 +22,7 @@
 %   \usebeamercolor[fg]{itemize item}
 %   \usebeamertemplate{itemize item}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\author[J. Fandinno \& Y. Lierler]{{\usebeamercolor[fg]{alerted text}Jorge Fandinno} and Yuliya Lierler}
+\author[J. Fandinno \& Eleuterio Lillo Portero]{{\usebeamercolor[fg]{alerted text}Jorge Fandinno} and Eleuterio Lillo Portero}
 
 \date{AAAI 2023}
 
@@ -37,7 +38,7 @@
 \begin{document}
 \frame{\titlepage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Answer set programming}
+\begin{frame}{Solving Epistemic Logic Programs}
 \begin{myitemize}
     \item \hi{\texttt{eclingo}} is a solver for epistemic logic programs.
     \begin{align*}
@@ -51,6 +52,104 @@
     
     \item We developed a new version of \texttt{eclingo} that is \speedup{3.3x} faster and solves 87\% more instances.
 \end{myitemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Solving Epistemic Logic Programs}
+    \begin{myitemize}
+        \item[] As the previous version, \texttt{eclingo} 2.0 uses a generate-and-test approach.
+    \end{myitemize}
+    \begin{algorithm}[H]
+        \scriptsize
+        \caption{Generate-and-test computation of~$n$ worldviews of a program~$\Pi$ in normal form.}\label{alg:guess-and-check}
+        \hspace*{\algorithmicindent} \textbf{Input} Generate program $G(\Pi)$\\
+        \hspace*{\algorithmicindent} \textbf{Input} Test program $T(\Pi)$\\
+        \hspace*{\algorithmicindent} \textbf{Input} Number of requested worldviews~$n$\\
+        \hspace*{\algorithmicindent} \textbf{Output} Set~$\Omega$ containing~$n$  worldviews of~$\Pi$
+    
+        \begin{algorithmic}[1] %[1] enables line numbers
+            \STATE Let $\Omega=\emptyset$.
+            \FOR{$M$ in $\SM{G(\Pi)}$} \label{alg.generator.loop.ini}
+                \IF {\texttt{Test$(T(\Pi),\,M)$}}
+                \STATE $\wv$ = \texttt{BuildWorldView$(M)$}
+                \STATE $\Omega$ = $\Omega \cup \{ \wv \}$
+                    \IF {$|\Omega| \geq n$}
+                    \STATE \textbf{return} $\Omega$
+                    \ENDIF
+                \ENDIF
+            \ENDFOR \label{alg.generator.loop.end}
+            \STATE \textbf{return} $\Omega$
+        \end{algorithmic}
+    \end{algorithm}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Solving Epistemic Logic Programs}
+    \begin{myitemize}
+        \item We first compute a normal form of the program in which negation is not in the scope of the epistemic operator.
+        \begin{itemize}
+            \item The testing if a candidate corresponds to a worldview can be done by computing the cautions consequences (without normal form the brave consequences are also necessary).
+        \end{itemize}
+        
+        \item In the paper, we describe sufficient conditions for the generate and test program for this algorithm to be correct.
+        
+        \item The main idea of the new solver is to use a new generator program that produces fewer candidates.
+    \end{myitemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Basic Generate Program}
+    \begin{myitemize}
+        \item Replaces epistemic atoms~$\K\,a$ by a fresth atom~$\kk{a}$ and introduces a choice rule fore each fresh atom.
+    \end{myitemize}
+    For the epistemic program, 
+    \begin{align*}
+        b &\leftarrow \K a
+    \end{align*}
+    we get the generate program
+    \begin{align*}
+        b &\leftarrow ka
+        &\hspace{10pt}
+        \{ ka \} &\leftarrow a
+    \end{align*}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Propagate Epistemic Consequences}
+    \begin{myitemize}
+        \item[] The key idea is to propagate the consequences of epistemic decisions.
+    \end{myitemize}
+    For the epistemic program, 
+    \begin{align*}
+        a &&
+        b &\leftarrow \K a
+        &
+        c &\leftarrow \K b
+    \end{align*}
+    Note that~$\K a$ is true because~$a$ is a fact.
+    %
+    Furthemore, whenever we have~$\K a$, we have~$b$ \hi{but also~$\K b$}.
+    
+    \pause
+
+    The generate program becomes
+    \begin{align*}
+        a && 
+        \\
+        b &\leftarrow ka
+        &\hspace{10pt}
+        \{ ka \} &\leftarrow a
+        \\
+        c &\leftarrow kb
+        &\hspace{10pt}
+        \{ kb \} &\leftarrow b
+        \\
+        \hi{\kp{a}}&
+        &
+        &\hi{\leftarrow \kp{a} \wedge \neg ka}
+        \\
+        \hi{\kp{b}} &\hi{\leftarrow ka}
+        &
+        &\hi{\leftarrow \kp{b} \wedge \neg kb}
+    \end{align*}
+
+    \hi{$\kp{b}$} is used to distinguish that~$\K b$ is a consequence dervided from choices of epistemic atoms while~$kb$ only states that~$\K b$ has been chosen to be true.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
