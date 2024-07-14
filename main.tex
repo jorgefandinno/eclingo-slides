@@ -8,10 +8,11 @@
 \usepackage{amsmath,amssymb,amstext}
 \usepackage{calc}
 \usepackage{tikz}
-\usepackage{algorithm, algorithmic}
 \usetikzlibrary{positioning}
 \tikzset{place/.style={draw}}
 \tikzset{>=stealth, auto, node distance=2.5cm, every loop/.style={->, min distance=10mm, in=0, out=60, looseness=10}}
+\usepackage{pgfplots}
+\usepackage{algorithm, algorithmic}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{uno_style.tex}
 \input{macro.tex}
@@ -202,15 +203,49 @@
     \end{myitemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Experimental Results}
+\begin{frame}{Experimental Results (Survival Plot)}
+    % \begin{myitemize}
+    %     \item We compare our new solver with~\texttt{EP-ASP},
+    %     the previous version of~\texttt{eclingo},
+    %     \texttt{selp}, and~\texttt{elp2qasp}.
+    % \end{myitemize}
+    % \vspace*{-20pt}
+    \input{solver_comp.tex}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Experimental Results (Highlights)}
     \begin{myitemize}
-        \item We compare our new solver with~\texttt{EP-ASP},
-        the previous version of~\texttt{eclingo},
-        \texttt{selp}, and~\texttt{elp2qasp}.
+        \item Our solver is \speedup{3.3x} faster than the previous version and it solves 87\% more instances.
+        \item It dominates the other solvers in all benchmarks.
+        \begin{itemize}
+            \item In the eligible benchmark, it solves 100\% of the instances and it is \speedup{7.5x} faster than the previous version.
+            
+            \item In the Yale benchmark, it solves every instance in less than 1 second (same as the previous version).
+            \begin{itemize}
+                \item All but \texttt{elp2qasp} solve all instances.
+            \end{itemize}
+            
+            \item In the bomb benchmark, it is \speedup{2.4x} faster than~\texttt{EP-ASP} and it solves almost 3 times more instances.
+            \begin{itemize}
+                \item Compared to the previous version, it is \speedup{2.9x} faster and it solves almost 7.7 times more instances.
+                \item \texttt{EP-ASP} has a specific mode for conformant planning that uses domain-specific heuristics. When compared to this version, our solver is \speedup{1.5x} faster and solves \speedup{50\%} more instances.
+            \end{itemize}
+        \end{itemize}
     \end{myitemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Conclusions}
+    \begin{myitemize}
+        \item We have developed a theoretical framework for generate-and-test computation of worldviews of epistemic logic programs and prove its correctness.
+        
+        \item We have instantiated this framework with a new generator program that propagates the consequences of epistemic decisions.
+        \begin{itemize}
+            \item We prove that can exponentially reduce the number of candidates while only introducing a linear overhead. 
+        \end{itemize}
 
+        \item We implemented a new version of~\texttt{eclingo} that is \speedup{3.3x} faster and solves 87\% more instances than state-of-the-art solvers.
+    \end{myitemize}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{\backcoverpage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

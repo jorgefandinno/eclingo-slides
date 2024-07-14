@@ -1,0 +1,31 @@
+%!TEX root = paper-aaai25.tex
+\begin{tikzpicture}
+\begin{axis}[
+    % title={Survival Plots for solvers},
+    width=1\textwidth,
+    height=0.55\textwidth,
+    ylabel={Time(Seconds)},
+    xlabel={Nº of Instances solved},
+    ymin=0, ymax=603,
+    xmin=0, xmax=350,
+    ytick={0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600},
+    xtick={50, 100, 150, 200, 250, 300, 350},
+    legend style={
+                at={(0.87,0.165)},
+                anchor=center,
+                legend columns=1,
+                nodes={scale=0.6, transform shape},
+                /tikz/every even column/.append style={column sep=0.5cm}
+            },
+    ymajorgrids=true,
+    grid style=dashed,
+]
+\input{solver_comp_g1.tex}
+% \input{solver_comp_g0.tex}
+\input{solver_comp_eclingo.tex}
+% \input{solver_comp_epasp.tex}      
+\input{solver_comp_epasp_noplanning}
+\input{solver_comp_selp.tex}
+\input{solver_comp_elp2qasp.tex}
+\end{axis}
+\end{tikzpicture}
