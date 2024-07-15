@@ -1,0 +1,3 @@
+[submodule "include/logos"]
+	path = include/logos
+	url = ../logos
