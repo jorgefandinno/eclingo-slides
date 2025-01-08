@@ -14,6 +14,7 @@
 \tikzset{>=stealth, auto, node distance=2.5cm, every loop/.style={->, min distance=10mm, in=0, out=60, looseness=10}}
 \usepackage{pgfplots}
 \usepackage{algorithm, algorithmic}
+\usepackage{caption}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{uno_style.tex}
 \input{macro.tex}
@@ -23,6 +24,7 @@
 % \setitemize{label=\usebeamerfont*{itemize item}%
 %   \usebeamercolor[fg]{itemize item}
 %   \usebeamertemplate{itemize item}}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author[J. Fandinno \& Eleuterio Lillo Portero]{{\usebeamercolor[fg]{alerted text}Jorge Fandinno} and Eleuterio Lillo Portero}
 
@@ -52,11 +54,11 @@
     
         \bigskip
 
-        \item Deciding if an epistemic logic program has an answer (called \hi{worldview}) is~$\Sigma^P_3$-complete and~$\Sigma^P_2$-complete for the case of disjuntive\nobreak-free programs (One lever higher than ASP).
+        \item Deciding if an epistemic logic program has an answer (called \hi{worldview}) is~$\Sigma^P_3$-complete and~$\Sigma^P_2$-complete for the case of disjuntive\nobreak-free programs (one lever higher than ASP).
         
         \bigskip
 
-        \item Epistemic logic programs provide a more natural way to model problem in the second level of the polynomial hierarchy than ASP with saturation techniques.
+        \item Epistemic logic programs provide a more natural way to model problem in the second level of the polynomial hierarchy than disjunctive ASP with saturation techniques.
     \end{myitemize}
     \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -157,6 +159,55 @@
         \{ \kk{b} \} &\leftarrow b
     \end{align*}
     which has candidates~$\{a\}$, $\{a,\kk{a},b\}$ and~$\{a,\kk{a},b,\kk{b},c\}$. Only the last candidate corresponds to its unique worldview.
+\end{frame}
+
+\newcommand{\lenitem}[2][.5\linewidth]{\parbox[t]{#1}{\strut #2\strut}}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Generate-and-Test Framework}
+    \mbox{}\hfill\raisebox{20pt}[0pt][0pt]{%
+        \begin{minipage}[t]{.4\linewidth}
+            \begin{algorithm}[H]
+                \footnotesize
+                \captionsetup{font=small}
+                \caption{Generate-and-test.}
+                \hspace*{\algorithmicindent} \textbf{Input} Generate program $G(\Pi)$\\
+                \hspace*{\algorithmicindent} \textbf{Input} Test program $T(\Pi)$
+                % \\
+                % \hspace*{\algorithmicindent} \textbf{Input} Number of requested worldviews~$n$
+                % \\
+                % \hspace*{\algorithmicindent} \textbf{Output} Set~$\Omega$ containing~$n$  worldviews of~$\Pi$
+            
+                \begin{algorithmic}[1] %[1] enables line numbers
+                    \FOR{$M$ in $\SM{G(\Pi)}$}
+                        \IF { \text{$\SMC{T(\Pi); k(M)}$ matches $M$} }
+                        \STATE \textbf{return} $\SM{T(\Pi)}$
+                        \ENDIF
+                    \ENDFOR
+                    \STATE \textbf{return} \text{No worldview}
+                \end{algorithmic}
+            \end{algorithm}%
+            \vspace{-10pt}
+            \scriptsize%
+            $\SMC{T(\Pi); k(M)}$ denotes the cautions consequences of~$T(\Pi)$ under the assumptions of the epistemic atoms in~$M$.
+        \end{minipage}%
+    }%
+    \vspace*{-\baselineskip}
+    \begin{myitemize}
+        \item \lenitem{A generator program}
+        \begin{itemize}
+            \item \lenitem{has an answer set for each world view of the epistemic program where~$\kk{a}$ is true if~$\K a$ is true in the world view.}
+            \item  \lenitem{Each of its answer set corresponds to a candidate that is not empty.}
+        \end{itemize} 
+        \item \lenitem{Fixing the epistemic atoms of the tester program produces as stable models all the elements of the worldview.}
+    \end{myitemize}
+
+    \vspace{10pt}
+
+    \begin{theorem}
+        The generate-and-test algorithm produces all worldviews of a program~$\Pi$ if the generator and test programs satisfy the above conditions.
+    \end{theorem}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Propagate Epistemic Consequences}
