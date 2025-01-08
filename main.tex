@@ -6,6 +6,7 @@
 \lstset{basicstyle=\ttfamily,escapechar=\%,escapeinside={\#(}{\#)}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsmath,amssymb,amstext}
+\usepackage{mathtools}
 \usepackage{calc}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
@@ -25,7 +26,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author[J. Fandinno \& Eleuterio Lillo Portero]{{\usebeamercolor[fg]{alerted text}Jorge Fandinno} and Eleuterio Lillo Portero}
 
-\date{AAAI 2023}
+\date{AAAI 2025}
 
 \institute[UNO]{
     Department of Computer Science \\
@@ -34,122 +35,171 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Document Metadata
-\title{\texttt{eclingo} 2.0}
+\title{Solving Epistemic Logic Programs using\\Generate-and-Test with Propagation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 \frame{\titlepage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Solving Epistemic Logic Programs}
-\begin{myitemize}
-    \item \hi{\texttt{eclingo}} is a solver for epistemic logic programs.
-    \begin{align*}
-        \mathit{felon}   &\leftarrow \K\, \mathit{break\_rule}
-        \\
-        \mathit{suspect} &\leftarrow \neg \K\, \mathit{break\_rule}, \neg \K \neg \mathit{break\_rule}
-    \end{align*}
-    This encodes that a person a~$\mathit{felon}$ if we can determine that she broke a rule, and she is a~$\mathit{suspect}$ if it cannot be determined that she has broken nor that she has not done.
+\begin{frame}{Epistemic Logic Programs}
+    \begin{myitemize}
+        \item Epistemic logic programs are an extension of Answer Set Programs (ASP) with epistemic operators that allow reasoning about the knowledge of agents. For example,
+        \begin{align*}
+            \mathit{felon}   &\leftarrow \K\, \mathit{break\_rule}
+            \\
+            \mathit{suspect} &\leftarrow \neg \K\, \mathit{break\_rule}, \neg \K \neg \mathit{break\_rule}
+        \end{align*}
+        This encodes that a person a~$\mathit{felon}$ if we can determine that she broke a rule, and she is a~$\mathit{suspect}$ if it cannot be determined that she has broken nor that she has not done.
+    
+        \bigskip
 
-    \item Deciding if an epistemic logic program has an answer (called \hi{worldview}) is~$\Sigma^P_3$-complete and~$\Sigma^P_2$-complete for the case of dijuntive\nobreak-free programs.
-    
-    \item We developed a new version of \texttt{eclingo} that is \speedup{3.3x} faster and solves 87\% more instances.
-\end{myitemize}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Solving Epistemic Logic Programs}
-    \begin{myitemize}
-        \item[] As the previous version, \texttt{eclingo} 2.0 uses a generate-and-test approach.
+        \item Deciding if an epistemic logic program has an answer (called \hi{worldview}) is~$\Sigma^P_3$-complete and~$\Sigma^P_2$-complete for the case of disjuntive\nobreak-free programs (One lever higher than ASP).
+        
+        \bigskip
+
+        \item Epistemic logic programs provide a more natural way to model problem in the second level of the polynomial hierarchy than ASP with saturation techniques.
     \end{myitemize}
-    \begin{algorithm}[H]
-        \scriptsize
-        \caption{Generate-and-test computation of~$n$ worldviews of a program~$\Pi$ in normal form.}\label{alg:guess-and-check}
-        \hspace*{\algorithmicindent} \textbf{Input} Generate program $G(\Pi)$\\
-        \hspace*{\algorithmicindent} \textbf{Input} Test program $T(\Pi)$\\
-        \hspace*{\algorithmicindent} \textbf{Input} Number of requested worldviews~$n$\\
-        \hspace*{\algorithmicindent} \textbf{Output} Set~$\Omega$ containing~$n$  worldviews of~$\Pi$
-    
-        \begin{algorithmic}[1] %[1] enables line numbers
-            \STATE Let $\Omega=\emptyset$.
-            \FOR{$M$ in $\SM{G(\Pi)}$} \label{alg.generator.loop.ini}
-                \IF {\texttt{Test$(T(\Pi),\,M)$}}
-                \STATE $\wv$ = \texttt{BuildWorldView$(M)$}
-                \STATE $\Omega$ = $\Omega \cup \{ \wv \}$
-                    \IF {$|\Omega| \geq n$}
-                    \STATE \textbf{return} $\Omega$
-                    \ENDIF
-                \ENDIF
-            \ENDFOR \label{alg.generator.loop.end}
-            \STATE \textbf{return} $\Omega$
-        \end{algorithmic}
-    \end{algorithm}
-\end{frame}
+    \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Solving Epistemic Logic Programs}
+\begin{frame}{In the paper}
     \begin{myitemize}
-        \item We first compute a normal form of the program in which negation is not in the scope of the epistemic operator.
+        \item We formalize an \hi{abstract generate-and-test framework} for computing worldviews that covers existing solvers such as \texttt{EP-ASP} or \texttt{eclingo}:
         \begin{itemize}
-            \item The testing if a candidate corresponds to a worldview can be done by computing the cautions consequences (without normal form the brave consequences are also necessary).
+            \item Generate-and-test approaches use a generator program to generate candidates and a test program to check if a candidate corresponds to a worldview.
+
+            \item We provide \hi{sufficient conditions} on the generator and test programs for the \hi{correctness} of the algorithm.
         \end{itemize}
         
-        \item In the paper, we describe sufficient conditions for the generate and test program for this algorithm to be correct.
-        
-        \item The main idea of the new solver is to use a new generator program that produces fewer candidates.
+        \medskip
+
+        \item We propose a new generator program that \hi{propagates the consequences of epistemic decisions to reduce the number of candidates} that need to be tested.
+        \begin{itemize}
+            \item Each candidate to be tested requires a linear number of calls to an ASP solver.
+        \end{itemize}
+
+        \medskip
+
+        \item We implement a new solver based on this new generator
+        \begin{itemize}
+            \item benchmarks show that it solves \hi{87\% more instances} than existing solvers and is \hi{\speedup{3.3x} faster}.
+        \end{itemize}
     \end{myitemize}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Basic Generate Program}
+    \end{frame}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{frame}{Solving Epistemic Logic Programs}
+% \begin{myitemize}
+%     \item \hi{\texttt{eclingo}} is a solver for epistemic logic programs.
+%     \begin{align*}
+%         \mathit{felon}   &\leftarrow \K\, \mathit{break\_rule}
+%         \\
+%         \mathit{suspect} &\leftarrow \neg \K\, \mathit{break\_rule}, \neg \K \neg \mathit{break\_rule}
+%     \end{align*}
+%     This encodes that a person a~$\mathit{felon}$ if we can determine that she broke a rule, and she is a~$\mathit{suspect}$ if it cannot be determined that she has broken nor that she has not done.
+
+%     \item Deciding if an epistemic logic program has an answer (called \hi{worldview}) is~$\Sigma^P_3$-complete and~$\Sigma^P_2$-complete for the case of disjuntive\nobreak-free programs.
+    
+%     \item We developed a new version of \texttt{eclingo} that is \speedup{3.3x} faster and solves 87\% more instances.
+% \end{myitemize}
+% \end{frame}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{frame}{Solving Epistemic Logic Programs}
+%     \begin{myitemize}
+%         \item[] As the previous version, \texttt{eclingo} 2.0 uses a generate-and-test approach.
+%     \end{myitemize}
+%     \begin{algorithm}[H]
+%         \scriptsize
+%         \caption{Generate-and-test computation of~$n$ worldviews of a program~$\Pi$ in normal form.}\label{alg:guess-and-check}
+%         \hspace*{\algorithmicindent} \textbf{Input} Generate program $G(\Pi)$\\
+%         \hspace*{\algorithmicindent} \textbf{Input} Test program $T(\Pi)$\\
+%         \hspace*{\algorithmicindent} \textbf{Input} Number of requested worldviews~$n$\\
+%         \hspace*{\algorithmicindent} \textbf{Output} Set~$\Omega$ containing~$n$  worldviews of~$\Pi$
+    
+%         \begin{algorithmic}[1] %[1] enables line numbers
+%             \STATE Let $\Omega=\emptyset$.
+%             \FOR{$M$ in $\SM{G(\Pi)}$} \label{alg.generator.loop.ini}
+%                 \IF {\texttt{Test$(T(\Pi),\,M)$}}
+%                 \STATE $\wv$ = \texttt{BuildWorldView$(M)$}
+%                 \STATE $\Omega$ = $\Omega \cup \{ \wv \}$
+%                     \IF {$|\Omega| \geq n$}
+%                     \STATE \textbf{return} $\Omega$
+%                     \ENDIF
+%                 \ENDIF
+%             \ENDFOR \label{alg.generator.loop.end}
+%             \STATE \textbf{return} $\Omega$
+%         \end{algorithmic}
+%     \end{algorithm}
+% \end{frame}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Normal Form and Basic Generate Program}
     \begin{myitemize}
-        \item Replaces epistemic atoms~$\K\,a$ by a fresth atom~$\kk{a}$ and introduces a choice rule fore each fresh atom.
+        \item \hi{Normal form}: We first compute a normal form of the program in which negation is not in the scope of the epistemic operator using auxiliary atoms.
+        
+        \item \hi{Basic Generate Program}: Replaces epistemic atoms~$\K\,a$ by a fresth atom~$\kk{a}$ and introduces a choice rule~$\{ \kk{a} \}$ for each fresh atom.
     \end{myitemize}
-    For the epistemic program, 
+    Epistemic program
     \begin{align*}
+        a && 
         b &\leftarrow \K a
+        &
+        c &\leftarrow \K b
     \end{align*}
-    we get the generate program
+    has a unique worldview~$[\{a,b,c\}]$. 
+    \pause
+    We get the generate program
     \begin{align*}
+        a 
+        && 
         b &\leftarrow ka
-        &\hspace{10pt}
-        \{ ka \} &\leftarrow a
+        &
+        c &\leftarrow kb
+        &
+        \{ \kk{a} \} &\leftarrow a
+        &
+        \{ \kk{b} \} &\leftarrow b
     \end{align*}
+    which has candidates~$\{a\}$, $\{a,\kk{a},b\}$ and~$\{a,\kk{a},b,\kk{b},c\}$. Only the last candidate corresponds to its unique worldview.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Propagate Epistemic Consequences}
-    \begin{myitemize}
-        \item[] The key idea is to propagate the consequences of epistemic decisions.
-    \end{myitemize}
-    For the epistemic program, 
+    \vspace{-20pt}
     \begin{align*}
         a &&
         b &\leftarrow \K a
         &
         c &\leftarrow \K b
     \end{align*}
-    Note that~$\K a$ is true because~$a$ is a fact.
-    %
-    Furthemore, whenever we have~$\K a$, we have~$b$ \hi{but also~$\K b$}.
+    To see that~$[\{a,b,c\}]$ is the unique worldview, we can reason as follows:
+    \begin{itemize}
+        \item $\K a$ is true because~$a$ is a fact.
+        \item From~$\K a$ we can derive~$b$ and also~$\K b$.
+        \item From~$\K b$ we can derive~$c$.
+    \end{itemize}
     
     \pause
-
-    The generate program becomes
+    \begin{myitemize}
+        \item The key idea is to propagate the consequences of epistemic decisions.
+        \item We can add rules that reflect this reasoning to the generator program.
+    \end{myitemize}
     \begin{align*}
-        a && 
-        \\
+        a 
+        && 
         b &\leftarrow ka
-        &\hspace{10pt}
-        \{ ka \} &\leftarrow a
-        \\
+        &
         c &\leftarrow kb
-        &\hspace{10pt}
+        &
+        \{ ka \} &\leftarrow a
+        &
         \{ kb \} &\leftarrow b
         \\
         \hi{\kp{a}}&
         &
-        &\hi{\leftarrow \kp{a} \wedge \neg ka}
-        \\
-        \hi{\kp{b}} &\hi{\leftarrow ka}
+        \hi{\kp{b}} &\hi{\leftarrow \kk{a}}
         &
-        &\hi{\leftarrow \kp{b} \wedge \neg kb}
+        \hi{\kp{c}} &\hi{\leftarrow \kk{b}}
+        &
+        \mathrlap{\hspace{-16pt}\hi{\leftarrow \kp{a} \wedge \neg ka}}
+        &&
+        \mathrlap{\hspace{-16pt}\hi{\leftarrow \kp{b} \wedge \neg \kk{b}}}
     \end{align*}
-
     \hi{$\kp{b}$} is used to distinguish that~$\K b$ is a consequence dervided from choices of epistemic atoms while~$kb$ only states that~$\K b$ has been chosen to be true.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -180,10 +230,42 @@
     \end{myitemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Propagate Epistemic Consequences}
+    For program
+    \begin{align*}
+        b &\leftarrow \neg a
+        &
+        c &\leftarrow \K b
+    \end{align*}
+    we obtain the generator program
+    \begin{align*}
+        &&
+        b &\leftarrow \neg a
+        &
+        c &\leftarrow kb
+        &
+        \{ \kk{b} \} &\leftarrow b
+        \\
+        \hi{\kpnott{a}}&
+        &
+        \kp{b} &\leftarrow \hi{\kpnott{a}}
+        &
+        \kp{c} &\leftarrow \kk{b}
+        &&
+        \mathrlap{\hspace{-16pt}\leftarrow \kp{b} \wedge \neg \kk{b}}
+    \end{align*}
+    which produces a single candidate~$\{\kp{a},b,\kp{b},\kk{b},c,\kp{c}\}$ that corresponds to the unique worldview~$[\{b,c\}]$.
+
+    \begin{itemize}
+        \item $\kpnott{a}$ is a fact because there is no rule with~$a$ in the head.
+        \item The translation uses auxiliary atoms for each body to avoid the quadratic blowup of the completion.
+    \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[c]{Propagate Epistemic Consequences}
     \begin{theorem}
-        This method produces a valid generator program, and, thus, Algorithm~\ref{alg:guess-and-check} correctly computes the worldviews.
-        %
+        This method produces a valid generator program, and, thus, it can be used in our generate-and-test framework to correctly compute the worldviews of a program.
+        \\
         Furthermore,
         \begin{itemize}
             \item It produces at most as many candidates as the basic generator program.
@@ -197,8 +279,15 @@
     \begin{myitemize}
         \item Our implementation is built on top of version~5.7 of the ASP solver~\texttt{clingo} using Python and ASP.
         \begin{itemize}
+            \item It supports most language features of \texttt{clingo} such as choice rules, aggregates, intervals, etc.
+            
+            \item The code is available with MIT license at \hi{\url{https://github.com/potassco/eclingo}}.
+            
+            \item It replaces the previous version of eclingo.
+                        
             \item We use reification and metaprogramming to describe the generate and test programs.
-            \item We can change the generate and test programs by changing an ASP program.
+            
+            \item This will allow to develop new solvers with different generate and test programs by only modifying the ASP metaprogram.
         \end{itemize}
     \end{myitemize}
 \end{frame}
