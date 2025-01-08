@@ -292,36 +292,59 @@
     \end{myitemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Experimental Results (Survival Plot)}
+\begin{frame}{Experimental Results and Survival Plot}
+    \begin{columns}[T]
+        \begin{column}{0.45\textwidth}
+            \begin{myitemize}
+                \small
+                \item It solves 87\% more instances than existing solvers and is \speedup{3.3x} faster.
+
+                \bigskip
+
+                \item It dominates the other solvers in all benchmarks.
+                
+                \bigskip
+                
+                \item \texttt{EP-ASP} has a specific mode for conformant planning that uses domain-specific heuristics.
+                \begin{itemize}
+                    \item Our solver is \speedup{1.5x} faster and solves \speedup{50\%} more instances despite not using domain-specific heuristics.
+                \end{itemize}
+            \end{myitemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \hspace*{-13pt}
+            \input{solver_comp.tex}
+        \end{column}
+    \end{columns}
     % \begin{myitemize}
     %     \item We compare our new solver with~\texttt{EP-ASP},
     %     the previous version of~\texttt{eclingo},
     %     \texttt{selp}, and~\texttt{elp2qasp}.
     % \end{myitemize}
     % \vspace*{-20pt}
-    \input{solver_comp.tex}
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Experimental Results (Highlights)}
-    \begin{myitemize}
-        \item Our solver is \speedup{3.3x} faster than the previous version and it solves 87\% more instances.
-        \item It dominates the other solvers in all benchmarks.
-        \begin{itemize}
-            \item In the eligible benchmark, it solves 100\% of the instances and it is \speedup{7.5x} faster than the previous version.
+% \begin{frame}{Experimental Results (Highlights)}
+%     \begin{myitemize}
+%         \item Our solver is \speedup{3.3x} faster than the previous version and it solves 87\% more instances.
+%         \item It dominates the other solvers in all benchmarks.
+%         \begin{itemize}
+%             \item In the eligible benchmark, it solves 100\% of the instances and it is \speedup{7.5x} faster than the previous version.
             
-            \item In the Yale benchmark, it solves every instance in less than 1 second (same as the previous version).
-            \begin{itemize}
-                \item All but \texttt{elp2qasp} solve all instances.
-            \end{itemize}
+%             \item In the Yale benchmark, it solves every instance in less than 1 second (same as the previous version).
+%             \begin{itemize}
+%                 \item All but \texttt{elp2qasp} solve all instances.
+%             \end{itemize}
             
-            \item In the bomb benchmark, it is \speedup{2.4x} faster than~\texttt{EP-ASP} and it solves almost 3 times more instances.
-            \begin{itemize}
-                \item Compared to the previous version, it is \speedup{2.9x} faster and it solves almost 7.7 times more instances.
-                \item \texttt{EP-ASP} has a specific mode for conformant planning that uses domain-specific heuristics. When compared to this version, our solver is \speedup{1.5x} faster and solves \speedup{50\%} more instances.
-            \end{itemize}
-        \end{itemize}
-    \end{myitemize}
-\end{frame}
+%             \item In the bomb benchmark, it is \speedup{2.4x} faster than~\texttt{EP-ASP} and it solves almost 3 times more instances.
+%             \begin{itemize}
+%                 \item Compared to the previous version, it is \speedup{2.9x} faster and it solves almost 7.7 times more instances.
+%                 \item \texttt{EP-ASP} has a specific mode for conformant planning that uses domain-specific heuristics. When compared to this version, our solver is \speedup{1.5x} faster and solves \speedup{50\%} more instances.
+%             \end{itemize}
+%         \end{itemize}
+%     \end{myitemize}
+% \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Conclusions}
     \begin{myitemize}
@@ -332,7 +355,11 @@
             \item We prove that can exponentially reduce the number of candidates while only introducing a linear overhead. 
         \end{itemize}
 
-        \item We implemented a new version of~\texttt{eclingo} that is \speedup{3.3x} faster and solves 87\% more instances than state-of-the-art solvers.
+        \item We implemented a new solver which solves 87\% more instances than state-of-the-art solvers and \speedup{3.3x} faster.
+        
+        \bigskip
+        
+        \item \hi{Future work}: we plan to study how to introduce ideas from conflict-driven to further speed up solving epistemic logic programs.
     \end{myitemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

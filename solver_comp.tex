@@ -1,11 +1,16 @@
 %!TEX root = paper-aaai25.tex
 \begin{tikzpicture}
+\pgfplotsset{every tick label/.append style={font=\scriptsize}}
 \begin{axis}[
     % title={Survival Plots for solvers},
-    width=1\textwidth,
-    height=0.55\textwidth,
-    ylabel={Time(Seconds)},
-    xlabel={Nº of Instances solved},
+    width=1.25\textwidth,
+    height=1.13\textwidth,
+    ylabel={\scriptsize Time(Seconds)},
+    xlabel={\scriptsize Nº of Instances solved},
+    ylabel style={
+        yshift=-5pt,
+        % xshift=-60pt,
+    },
     ymin=0, ymax=603,
     xmin=0, xmax=350,
     ytick={0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600},
