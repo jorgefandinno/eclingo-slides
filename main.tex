@@ -275,10 +275,10 @@
     \end{theorem}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Implementation}
+\begin{frame}[c]{Implementation}
     \begin{myitemize}
-        \item Our implementation is built on top of version~5.7 of the ASP solver~\texttt{clingo} using Python and ASP.%
-        \begin{itemize}
+        \item[] Our implementation is built on top of version~5.7 of the ASP solver~\texttt{clingo} using Python and ASP.%
+        \begin{myitemize}
             \item It supports most language features of \texttt{clingo} such as choice rules, aggregates, intervals, etc.
             
             \item The code is available with MIT license at \hi{\url{https://github.com/potassco/eclingo}}.
@@ -288,7 +288,7 @@
             \item We use reification and metaprogramming to describe the generate and test programs.
             
             \item This will allow to develop new solvers with different generate and test programs by only modifying the ASP metaprogram.
-        \end{itemize}
+        \end{myitemize}
     \end{myitemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
