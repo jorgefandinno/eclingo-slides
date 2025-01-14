@@ -9,6 +9,10 @@ clean:
 
 init: .initialized
 
+pptx: all
+	pdf2pptx main.pdf
+	mv ./main.pptx eclingo.pptx
+
 SHELL=bash
 .initialized:
 	git config -f .gitmodules --get-regexp '^submodule\..*\.path$$' | \

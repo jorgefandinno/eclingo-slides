@@ -50,7 +50,7 @@
             \\
             \mathit{suspect} &\leftarrow \neg \K\, \mathit{break\_rule}, \neg \K \neg \mathit{break\_rule}
         \end{align*}
-        This encodes that a person a~$\mathit{felon}$ if we can determine that she broke a rule, and she is a~$\mathit{suspect}$ if it cannot be determined that she has broken nor that she has not done.
+        This encodes that a person is~$\mathit{felon}$ if we can determine that she broke a rule, and she is a~$\mathit{suspect}$ if it cannot be determined neither that she has broken the law nor that she has not done it.
     
         \bigskip
 
@@ -269,7 +269,7 @@
                 \kp{a_1} &\span\span\leftarrow 
                 \kp{a_2},\dotsc,\kp{a_k},
                 \kpnott{a_{k+1}},\dotsc,\kpnott{a_m},
-                \kk{L_{m+1}},\dotsc,\kk{L_n}
+                L_{m+1},\dotsc,L_n
             \end{aligned}
         \end{gather}
         \vspace*{-15pt}
@@ -359,7 +359,7 @@
                 
                 \item \texttt{EP-ASP} has a specific mode for conformant planning that uses domain-specific heuristics.
                 \begin{itemize}
-                    \item Our solver is \speedup{1.5x} faster and solves \speedup{50\%} more instances despite not using domain-specific heuristics.
+                    \item Our solver solves \speedup{50\%} more instances despite not using domain-specific heuristics.
                 \end{itemize}
             \end{myitemize}
         \end{column}
@@ -410,7 +410,7 @@
         
         \bigskip
         
-        \item \hi{Future work}: we plan to study how to introduce ideas from conflict-driven to further speed up solving epistemic logic programs.
+        \item \hi{Future work}: we plan to study how to introduce ideas from conflict-driven learning to further speed up solving epistemic logic programs.
     \end{myitemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
