@@ -131,22 +131,20 @@
 %     \end{algorithm}
 % \end{frame}
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Normal Form and Basic Generate Program}
+\begin{frame}{Normal Form and Basic Generator Program}
     \begin{myitemize}
         \item \hi{Normal form}: We first compute a normal form of the program in which negation is not in the scope of the epistemic operator using auxiliary atoms.
         
-        \item \hi{Basic Generate Program}: Replaces epistemic atoms~$\K\,a$ by a fresth atom~$\kk{a}$ and introduces a choice rule~$\{ \kk{a} \}$ for each fresh atom.
+        \item \hi{Basic generator program}: Replaces epistemic atoms~$\K\,a$ by a fresth atom~$\kk{a}$ and introduces a choice rule~$\{ \kk{a} \}$ for each fresh atom.
     \end{myitemize}
-    Epistemic program
+    For epistemic program
     \begin{align*}
         a && 
         b &\leftarrow \K a
         &
         c &\leftarrow \K b
     \end{align*}
-    has a unique worldview~$[\{a,b,c\}]$. 
-    \pause
-    We get the generate program
+    we get the generator program
     \begin{align*}
         a 
         && 
@@ -158,7 +156,8 @@
         &
         \{ \kk{b} \} &\leftarrow b
     \end{align*}
-    which has candidates~$\{a\}$, $\{a,\kk{a},b\}$ and~$\{a,\kk{a},b,\kk{b},c\}$. Only the last candidate corresponds to its unique worldview.
+    \pause
+    The original program has unique worldview~$[\{a,b,c\}]$, while the generator program produces three candidates: $\{a\}$, $\{a,\kk{a},b\}$ and~$\{a,\kk{a},b,\kk{b},c\}$. Only the last candidate corresponds to its unique worldview.
 \end{frame}
 
 \newcommand{\lenitem}[2][.5\linewidth]{\parbox[t]{#1}{\strut #2\strut}}
@@ -218,7 +217,7 @@
         &
         c &\leftarrow \K b
     \end{align*}
-    To see that~$[\{a,b,c\}]$ is the unique worldview, we can reason as follows:
+    To see that~$[\{a,b,c\}]$ is the unique worldview of this program, we can reason as follows:
     \begin{itemize}
         \item $\K a$ is true because~$a$ is a fact, so it must be true in all stable models.
         \item From~$\K a$ we can derive~$b$ from the second rule. 
@@ -337,7 +336,7 @@
             
             \item The code is available with MIT license at \hi{\url{https://github.com/potassco/eclingo}}.
             
-            \item It replaces the previous version of eclingo.
+            \item It replaces the previous version of \hi{eclingo}.
                         
             \item We use reification and \hi{metaprogramming} to describe the generate and test programs.
             
@@ -356,7 +355,7 @@
 
                 \bigskip
 
-                \item It dominates the other solvers in all benchmarks.
+                \item It dominates all the other solvers in all benchmarks.
                 
                 \bigskip
                 
